@@ -1,7 +1,9 @@
 package com.gba.horizon.service;
 
 import com.gba.horizon.entity.Category;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -11,8 +13,9 @@ public class CategoryServiceImpl implements CategoryService{
     private final Map<Long, Category> categories = new HashMap<Long, Category>();
 
     @Override
-    public Map<Long, Category> getAllCategories() {
-        return Collections.unmodifiableMap(categories);
+    public List<Category> getAllCategories() {
+        return categories.values()
+                .stream().toList();
     }
 
     @Override
@@ -22,7 +25,12 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public String deleteCategory(Long categoryId){
-        categories.remove(categoryId);
-        return "Category with categoryId: " + categoryId + " removed";
+        Category category =  categories.remove(categoryId);
+        if (category != null)
+            return "Category with categoryId: " + categoryId + " removed";
+        throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Resource not found"
+        );
     }
 }

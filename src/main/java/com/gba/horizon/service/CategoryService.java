@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface CategoryService {
-    Map<Long,Category> getAllCategories();
+    List<Category> getAllCategories();
     void createCategory(Category category);
     String deleteCategory(Long categoryId);
 }
