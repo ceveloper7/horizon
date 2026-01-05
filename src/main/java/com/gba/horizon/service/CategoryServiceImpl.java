@@ -33,4 +33,15 @@ public class CategoryServiceImpl implements CategoryService{
                 "Resource not found"
         );
     }
+
+    @Override
+    public Category updateCategory(Category category, Long categoryId){
+        Category cat = categories.get(categoryId);
+        if (cat != null) {
+            cat.setCategoryName(category.getCategoryName());
+            return cat;
+        }else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found");
+        }
+    }
 }
