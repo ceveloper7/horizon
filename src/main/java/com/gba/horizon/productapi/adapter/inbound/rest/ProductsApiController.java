@@ -15,6 +15,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * ProductApiController maneja los request al ProductApi endpoints permitiendo: crear, recuperar, actualizar y eliminar
+ * productos en nuestro API
+ * @RestController -> permite crear un bean administrador por Spring
+ * @RequestMapping("/api/products") -> Este controlador va a manejar las solicitudes que provengan de /api/products
+ */
+
 @RestController
 @RequestMapping("/api/products")
 @Validated
@@ -32,6 +39,11 @@ public class ProductsApiController implements ProductsApi{
         this.productMapper = productMapper;
     }
 
+    /**
+     * @PuMapping -> Creacion/actualizacion de la informacion de un producto
+     * @ValidSku -> No se permite que dos productos tengan el mismo numero sku
+     * Se retorna como respuesta 200 ok, 201 creado.
+     */
     @PutMapping(value = "/{productId}")
     @Override
     public ResponseEntity<ProductOutput> createOrUpdateProduct(
@@ -39,6 +51,7 @@ public class ProductsApiController implements ProductsApi{
             @ValidSku
             String productId,
 
+            // enviamos productInput en el body del request
             @Valid
             @RequestBody
             ProductInput productInput) {

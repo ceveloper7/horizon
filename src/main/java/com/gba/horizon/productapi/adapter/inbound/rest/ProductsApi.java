@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+/**
+ * Detallamos todos los endpoints para la entidad Product.
+ */
 public interface ProductsApi {
 
     ResponseEntity<ProductOutput> createOrUpdateProduct(

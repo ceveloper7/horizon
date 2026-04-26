@@ -11,6 +11,9 @@ import java.math.BigDecimal;
 
 import com.gba.horizon.productapi.domain.Product;
 
+/**
+ * ProductInput data transfer object permite modificar un producto sin afectar la clase de dominio
+ */
 public record ProductInput(
         @NotBlank
         @Size(min = 3, max = 255)
