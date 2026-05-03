@@ -61,9 +61,11 @@ public class ProductsApiController implements ProductsApi{
                 .body(productMapper.toProductOutput(product.product()));
     }
 
+    @DeleteMapping(value = "/{productId}")
     @Override
-    public ResponseEntity<Void> deleteProduct(String productId) {
-        return null;
+    public ResponseEntity<Void> deleteProduct(@PathVariable("productId") String productId) {
+        productsCommandUseCase.deleteProduct(productId);
+        return ResponseEntity.noContent().build();
     }
 
     @Override
@@ -71,13 +73,23 @@ public class ProductsApiController implements ProductsApi{
         return null;
     }
 
+    @GetMapping(value = "/{productId}")
     @Override
-    public ResponseEntity<ProductOutput> getProductById(String productId) {
-        return null;
+    public ResponseEntity<ProductOutput> getProductById(@PathVariable("productId") String productId) {
+        final var product = productsQueryUseCase.getProductById(productId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(productMapper.toProductOutput(product));
     }
 
+    @GetMapping
     @Override
     public ResponseEntity<List<ProductOutput>> getProducts() {
-        return null;
+        final var products = productsQueryUseCase.getAllProducts()
+                .stream()
+                .map(productMapper::toProductOutput)
+                .toList();
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(products);
     }
 }
