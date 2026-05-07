@@ -63,19 +63,23 @@ public class ProductsApiController implements ProductsApi{
 
     @DeleteMapping(value = "/{productId}")
     @Override
-    public ResponseEntity<Void> deleteProduct(@PathVariable("productId") String productId) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable("productId") @ValidSku String productId) {
         productsCommandUseCase.deleteProduct(productId);
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping(value = "/{productId}")
     @Override
-    public ResponseEntity<ProductOutput> editProductDescription(String productId, ProductDescriptionInput input) {
-        return null;
+    public ResponseEntity<ProductOutput> editProductDescription(
+            @PathVariable("productId") @ValidSku String productId,
+            @RequestBody @Valid ProductDescriptionInput input) {
+        final var product = productsCommandUseCase.updateProductDescription(productId, input.description());
+        return ResponseEntity.status(HttpStatus.OK).body(productMapper.toProductOutput(product));
     }
 
     @GetMapping(value = "/{productId}")
     @Override
-    public ResponseEntity<ProductOutput> getProductById(@PathVariable("productId") String productId) {
+    public ResponseEntity<ProductOutput> getProductById(@PathVariable("productId") @ValidSku String productId) {
         final var product = productsQueryUseCase.getProductById(productId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(productMapper.toProductOutput(product));
