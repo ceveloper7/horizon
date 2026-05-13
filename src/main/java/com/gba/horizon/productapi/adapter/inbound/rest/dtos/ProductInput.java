@@ -24,7 +24,7 @@ public record ProductInput(
         @Size(min = 10, max = 255)
         @JsonProperty("description")
         String description,
-        
+
         @NotNull
         @Positive
         @JsonProperty("price")
