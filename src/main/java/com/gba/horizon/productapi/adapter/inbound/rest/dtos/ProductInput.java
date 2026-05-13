@@ -19,10 +19,12 @@ public record ProductInput(
         @Size(min = 3, max = 255)
         @JsonProperty("name")
         String name,
+
         @NotBlank
         @Size(min = 10, max = 255)
         @JsonProperty("description")
         String description,
+        
         @NotNull
         @Positive
         @JsonProperty("price")
