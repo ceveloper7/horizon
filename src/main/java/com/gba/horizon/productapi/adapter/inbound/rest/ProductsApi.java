@@ -4,6 +4,7 @@ import com.gba.horizon.productapi.adapter.inbound.rest.configuration.ValidSku;
 import com.gba.horizon.productapi.adapter.inbound.rest.dtos.ProductDescriptionInput;
 import com.gba.horizon.productapi.adapter.inbound.rest.dtos.ProductInput;
 import com.gba.horizon.productapi.adapter.inbound.rest.dtos.ProductOutput;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * Detallamos todos los endpoints para la entidad Product.
  */
+@Tag(name = "products", description = "The products API")
 public interface ProductsApi {
 
     ResponseEntity<ProductOutput> createOrUpdateProduct(
